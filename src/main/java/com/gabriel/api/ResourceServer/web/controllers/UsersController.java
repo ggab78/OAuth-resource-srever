@@ -1,6 +1,5 @@
 package com.gabriel.api.ResourceServer.web.controllers;
 
-
 import com.gabriel.api.ResourceServer.domain.RestUser;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
@@ -9,15 +8,17 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
+import javax.annotation.security.PermitAll;
+
 @RestController
 @RequestMapping("/users")
 public class UsersController {
 
+    @PermitAll
     @GetMapping("/status/check")
     public String status() {
         return "working";
     }
-
 
     @Secured("ROLE_developer")
     @DeleteMapping(path="/{id}")
@@ -38,5 +39,4 @@ public class UsersController {
     public RestUser getUser(@PathVariable String id, @AuthenticationPrincipal Jwt jwt) {
         return RestUser.builder().userId(id).firstName("gab").lastName("gam").build();
     }
-
 }
