@@ -1,6 +1,8 @@
 package com.gabriel.api.ResourceServer.web.controllers;
 
 import com.gabriel.api.ResourceServer.domain.RestUser;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,10 +16,13 @@ import javax.annotation.security.PermitAll;
 @RequestMapping("/users")
 public class UsersController {
 
+    @Autowired
+    Environment env;
+
     @PermitAll
     @GetMapping("/status/check")
     public String status() {
-        return "working";
+        return "working on port "+env.getProperty("local.server.port");
     }
 
     @Secured("ROLE_developer")
